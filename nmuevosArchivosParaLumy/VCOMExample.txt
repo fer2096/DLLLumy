@@ -1,0 +1,961 @@
+/*************************************************************************************************************************
+**                                                                                                                      **
+** ©Copyright 2023 HID Global Corporation/ASSA ABLOY AB. ALL RIGHTS RESERVED.                                           **
+**                                                                                                                      **
+** For a list of applicable patents and patents pending, visit www.hidglobal.com/patents                                **
+**                                                                                                                      **
+** THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR                                           **
+** IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS                                     **
+** FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR                                       **
+** COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER                                       **
+** IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN                                              **
+** CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                                           **
+**                                                                                                                      **
+*************************************************************************************************************************/
+
+package vcomexample;
+
+import java.io.IOException;
+
+import java.io.FileOutputStream;
+
+import java.nio.file.Paths;
+import java.util.List;
+
+/**
+ *
+ * @author rmckee
+ */
+
+public final class VCOMExample {
+    private static VCOMExample instance;
+    
+    private boolean libsLoaded = false;
+        
+    private VCOMExample(){ }
+        
+    public static VCOMExample getInstance(){
+        if (instance == null) {
+            instance = new VCOMExample();
+        }
+        return instance;
+    }
+    
+    public int loadLibs(String libVCOMExamplePath, String libVCOMExampleJNIWrapperPath){
+        
+        if(libsLoaded == true){
+            return V100_Types.ERROR_LIBS_ALREADY_LOADED; // libs already loaded
+        }
+                
+        try{
+            System.load(libVCOMExamplePath);        
+            System.load(libVCOMExampleJNIWrapperPath);
+        } catch (UnsatisfiedLinkError error){
+            return V100_Types.ERROR_INTERNAL;
+        } catch (SecurityException error) {
+            return V100_Types.ERROR_INTERNAL;
+        } catch (NullPointerException error){
+            return V100_Types.ERROR_INTERNAL;
+        }  
+        
+        libsLoaded = true;
+        return 0;
+    }
+    
+    public int V100ArmTrigger(V100_DEVICE_TRANSPORT_INFO dti, int nMode){
+        if(libsLoaded == true){
+            return V100_Arm_Trigger(dti, nMode);
+        }
+        else {
+            return V100_Types.ERROR_LIBS_NOT_LOADED;
+        }
+    }
+    
+    public int V100CancelOperation(V100_DEVICE_TRANSPORT_INFO dti){
+        if(libsLoaded == true){
+            return V100_Cancel_Operation(dti);
+        }
+        else {
+            return V100_Types.ERROR_LIBS_NOT_LOADED;
+        }
+    }
+    
+    public int V100ExchangeSessionKey(V100_DEVICE_TRANSPORT_INFO dti){
+        if(libsLoaded == true){
+            return V100_Exchange_Session_Key(dti);
+        }
+        else {
+            return V100_Types.ERROR_LIBS_NOT_LOADED;
+        }
+    }
+    
+    public int V100Clear(V100_DEVICE_TRANSPORT_INFO dti){
+        if(libsLoaded == true){
+            return V100_Clear(dti);
+        }
+        else {
+            return V100_Types.ERROR_LIBS_NOT_LOADED;
+        }
+    }
+    
+    public int V100ConfigComport(V100_DEVICE_TRANSPORT_INFO dti, int nBaudRate){
+        if(libsLoaded == true){
+            return V100_Config_Comport(dti, nBaudRate);
+        }
+        else {
+            return V100_Types.ERROR_LIBS_NOT_LOADED;
+        }
+    }
+    
+    public int V100GetAcqStatus(V100_DEVICE_TRANSPORT_INFO dti, int[] nAcqStatus){
+        if(libsLoaded == true){
+            return V100_Get_Acq_Status(dti, nAcqStatus);
+        }
+        else {
+            return V100_Types.ERROR_LIBS_NOT_LOADED;
+        }
+    }
+    
+    public int V100GetCaptureTemplate(V100_DEVICE_TRANSPORT_INFO dti, 
+                            int nCaptureType,
+                            byte[] pTemplate,                            
+                            int[] nTemplateSize){
+        if(libsLoaded == true){
+            return V100_Get_Capture_Template(dti, 
+                            nCaptureType, 
+                            pTemplate, 
+                            nTemplateSize);
+        }
+        else {
+            return V100_Types.ERROR_LIBS_NOT_LOADED;
+        }
+    }
+    
+    public int V100GetCompositeImage(V100_DEVICE_TRANSPORT_INFO dti, 
+                            byte[] pCompositeImage,
+                            int[] nSpoofValue, 
+                            int[] nImageSize){
+        if(libsLoaded == true){
+            return V100_Get_Composite_Image(dti, 
+                            pCompositeImage, 
+                            nSpoofValue,
+                            nImageSize);
+        }
+        else {
+            return V100_Types.ERROR_LIBS_NOT_LOADED;
+        }
+    }
+    
+     public int V100GetDBMetrics(V100_DEVICE_TRANSPORT_INFO dti, V100_Types._V100_DB_METRICS dbMetrics){
+        if(libsLoaded == true){
+            return V100_Get_DB_Metrics(dti, dbMetrics);
+        }
+        else {
+            return V100_Types.ERROR_LIBS_NOT_LOADED;
+        }
+    }
+     
+     public int V100GetFIRImage(V100_DEVICE_TRANSPORT_INFO dti, 
+                            int nFIRType, 
+                            int nFingerType, 
+                            byte[] pFIRImage, 
+                            int[] nFIRImageSize){
+        if(libsLoaded == true){
+            return V100_Get_FIR_Image(dti, nFIRType, 
+                            nFingerType, 
+                            pFIRImage, 
+                            nFIRImageSize);
+        }
+        else {
+            return V100_Types.ERROR_LIBS_NOT_LOADED;
+        }          
+     }
+    
+   public int V100GetGPIO(V100_DEVICE_TRANSPORT_INFO dti, byte[] cMask){
+       if(libsLoaded == true){
+            return V100_Get_GPIO(dti, cMask);
+        }
+        else {
+            return V100_Types.ERROR_LIBS_NOT_LOADED;
+        }
+   }
+    
+    public int V100GetImage(V100_DEVICE_TRANSPORT_INFO dti, int nType, byte[] pImage, int[] nImageSize){
+        if(libsLoaded == true){
+            return V100_Get_Image(dti, nType, pImage, nImageSize);
+        }
+        else {
+            return V100_Types.ERROR_LIBS_NOT_LOADED;
+        }
+    }
+      
+    public int V100GetOPStatus(V100_DEVICE_TRANSPORT_INFO dti, V100_Types._V100_OP_STATUS opStatus){
+        if(libsLoaded == true){
+            return V100_Get_OP_Status(dti, opStatus);
+        }
+        else {
+            return V100_Types.ERROR_LIBS_NOT_LOADED;
+        }
+    }
+    
+    public int V100GetSerial(V100_DEVICE_TRANSPORT_INFO dti, int[] serialNumber){
+        if(libsLoaded == true){
+            return V100_Get_Serial(dti, serialNumber);
+        }
+        else {
+            return V100_Types.ERROR_LIBS_NOT_LOADED;
+        }
+    }
+    
+    public String V100GetVersion(V100_DEVICE_TRANSPORT_INFO dti, int[] returnCode){
+        if(libsLoaded == true){
+            return V100_Get_Version(dti, returnCode);
+        }
+        else {
+            returnCode[0] = V100_Types.ERROR_LIBS_NOT_LOADED;
+            return new String("ERROR_LIBS_NOT_LOADED");
+        }
+    }
+    
+    public int V100GetStatus(V100_DEVICE_TRANSPORT_INFO dti, V100_Types._V100_INTERFACE_STATUS_TYPE IST){
+        if(libsLoaded == true){
+            return V100_Get_Status(dti, IST);
+        }
+        else {
+            return V100_Types.ERROR_LIBS_NOT_LOADED;
+        }
+    }
+   
+    public int V100GetTag(V100_DEVICE_TRANSPORT_INFO dti,                             
+                            byte[] pTag, 
+                            int[] nTagLength){
+        if(libsLoaded == true){
+            return V100_Get_Tag(dti, 
+                            pTag,
+                            nTagLength);
+        }
+        else {
+            return V100_Types.ERROR_LIBS_NOT_LOADED;
+        }          
+     }
+    
+    public int V100GetTemplate(V100_DEVICE_TRANSPORT_INFO dti,                             
+                            byte[] pTemplate, 
+                            int[] nTemplateSize){
+        if(libsLoaded == true){
+            return V100_Get_Template(dti, 
+                            pTemplate,
+                            nTemplateSize);
+        }
+        else {
+            return V100_Types.ERROR_LIBS_NOT_LOADED;
+        }          
+     }
+    
+    public int V100Reset(V100_DEVICE_TRANSPORT_INFO dti){
+        if(libsLoaded == true){
+            return V100_Reset(dti);
+        }
+        else {
+            return V100_Types.ERROR_LIBS_NOT_LOADED;
+        }
+    }
+    
+    public int V100ResetSecurity(V100_DEVICE_TRANSPORT_INFO dti, int arg){
+        if(libsLoaded == true){
+            return V100_Reset_Security(dti, arg);
+        }
+        else {
+            return V100_Types.ERROR_LIBS_NOT_LOADED;
+        }
+    }
+    
+    public int V100SetGPIO(V100_DEVICE_TRANSPORT_INFO dti, byte[] mask){
+        if(libsLoaded == true){
+            return V100_Set_GPIO(dti, mask);
+        }
+        else {
+            return V100_Types.ERROR_LIBS_NOT_LOADED;
+        }
+    }
+    
+    public int V100SetLED(V100_DEVICE_TRANSPORT_INFO dti, int nControl){
+        if(libsLoaded == true){
+            return V100_Set_LED(dti, nControl);
+        }
+        else {
+            return V100_Types.ERROR_LIBS_NOT_LOADED;
+        }
+    }  
+    
+    public int V100SetTag(V100_DEVICE_TRANSPORT_INFO dti, byte[] pTag, int nTagLength){
+        if(libsLoaded == true){
+            return V100_Set_Tag(dti, pTag, nTagLength);
+        }
+        else {
+            return V100_Types.ERROR_LIBS_NOT_LOADED;
+        }
+    }  
+    
+    public int V100SetTemplate(V100_DEVICE_TRANSPORT_INFO dti, 
+                                byte[] pTemplate, 
+                                int nTemplateSize){
+        if(libsLoaded == true){
+            return V100_Set_Template(dti, pTemplate, nTemplateSize);
+        }
+        else {
+            return V100_Types.ERROR_LIBS_NOT_LOADED;
+        }
+    }
+    
+    public int V100Truncate378(V100_DEVICE_TRANSPORT_INFO dti, 
+                                int nMaxTemplateSize,
+                                byte[] pInTemplate, 
+                                int nInTemplateSize,
+                                byte[] pOutTemplate,
+                                int[] nOutTemplateSize){
+        if(libsLoaded == true){
+            return V100_Truncate_378(dti, 
+                                nMaxTemplateSize,
+                                pInTemplate, 
+                                nInTemplateSize,
+                                pOutTemplate,
+                                nOutTemplateSize);
+        }
+        else {
+            return V100_Types.ERROR_LIBS_NOT_LOADED;
+        }
+    }
+    
+    public int V100UpdateFirmware(V100_DEVICE_TRANSPORT_INFO dti, 
+                                byte[] pFirmwareStream, 
+                                int nFWStreamSize){
+        if(libsLoaded == true){
+            return V100_Update_Firmware(dti, pFirmwareStream, nFWStreamSize);
+        }
+        else {
+            return V100_Types.ERROR_LIBS_NOT_LOADED;
+        }
+    }
+    
+    public int V100Verify(V100_DEVICE_TRANSPORT_INFO dti, 
+                                byte[] pTemplate,
+                                int nTemplateSize,
+                                int[] nSpoof,
+                                int[] nMatchScore){
+        if(libsLoaded == true){
+            return V100_Verify(dti, 
+                                pTemplate,
+                                nTemplateSize,
+                                nSpoof,
+                                nMatchScore);
+        }
+        else {
+            return V100_Types.ERROR_LIBS_NOT_LOADED;
+        }
+    }
+    
+    public int V100VidStream(V100_DEVICE_TRANSPORT_INFO dti, int nMode){
+        if(libsLoaded == true){
+            return V100_Vid_Stream(dti, nMode);
+        }
+        else {
+            return V100_Types.ERROR_LIBS_NOT_LOADED;
+        }
+    }
+    
+    public int V100WaitForFingerClear(V100_DEVICE_TRANSPORT_INFO dti){
+        if(libsLoaded == true){
+            return V100_WaitForFingerClear(dti);
+        }
+        else {
+            return V100_Types.ERROR_LIBS_NOT_LOADED;
+        }
+    }
+    
+    public int V100GetNumUSBDevices(int[] nNumDevices){
+        if(libsLoaded == true){
+            return V100_Get_Num_USB_Devices(nNumDevices);
+        }
+        else{
+            return V100_Types.ERROR_LIBS_NOT_LOADED;
+        }
+    }
+    
+    public int V100Open(V100_DEVICE_TRANSPORT_INFO dti){
+        if(libsLoaded == true){
+            return V100_Open(dti);
+        }
+        else{
+            return V100_Types.ERROR_LIBS_NOT_LOADED;
+        }
+    }
+    
+    public int V100OpenEx(V100_DEVICE_TRANSPORT_INFO dti){
+        if(libsLoaded == true){
+            return V100_Open_Ex(dti);
+        }
+        else{
+            return V100_Types.ERROR_LIBS_NOT_LOADED;
+        }
+    }
+    
+     public int V100Close(V100_DEVICE_TRANSPORT_INFO dti){
+        if(libsLoaded == true){
+            return V100_Close(dti);
+        }
+        else{
+            return V100_Types.ERROR_LIBS_NOT_LOADED;
+        }
+    }
+     
+    public int V100GetSensorType(V100_DEVICE_TRANSPORT_INFO dti, int[] sensorType) {
+        if(libsLoaded == true){
+            return V100_Get_Sensor_Type(dti, sensorType);
+        }
+        else {
+            return V100_Types.ERROR_LIBS_NOT_LOADED;
+        }
+    }
+     
+    public int V100Capture(V100_DEVICE_TRANSPORT_INFO pDev,
+                             byte[] pCompositeImage,
+                             int[]  nWidth,
+                             int[]  nHeight,
+                             byte[] pTemplate,
+                             int[]  nTemplateSize,
+                             int[]  Spoof,
+                             int    getComposite,
+                             int    getTemplate){
+        if(libsLoaded == true){
+            return V100_Capture(pDev,
+                             pCompositeImage,
+                             nWidth,
+                             nHeight,
+                             pTemplate,
+                             nTemplateSize,
+                             Spoof,
+                             getComposite,
+                             getTemplate);
+        }
+        else{
+            return V100_Types.ERROR_LIBS_NOT_LOADED;
+        }
+    }
+    
+    public int V100CaptureCb(V100_DEVICE_TRANSPORT_INFO pDev,
+                             byte[] pCompositeImage,
+                             int[]  nWidth,
+                             int[]  nHeight,
+                             byte[] pTemplate,
+                             int[]  nTemplateSize,
+                             int[]  Spoof,
+                             int    getComposite,
+                             int    getTemplate,
+                             IStatusCallbackListener callbackListener){
+        if(libsLoaded == true){
+            return V100_Capture_Cb(pDev,
+                             pCompositeImage,
+                             nWidth,
+                             nHeight,
+                             pTemplate,
+                             nTemplateSize,
+                             Spoof,
+                             getComposite,
+                             getTemplate,
+                             callbackListener);
+        }
+        else{
+            return V100_Types.ERROR_LIBS_NOT_LOADED;
+        }
+    }
+    
+    public int V100Match(V100_DEVICE_TRANSPORT_INFO pDev, 
+                            byte[] pProbeTemplate,
+                            int nProbeTemplateSize,
+                            byte[] pGalleryTemplate,
+                            int nGalleryTemplateSize,
+                            int[] MatchScore){
+        if(libsLoaded == true){
+            return V100_Match(pDev, 
+                            pProbeTemplate,
+                            nProbeTemplateSize,
+                            pGalleryTemplate,
+                            nGalleryTemplateSize,
+                            MatchScore);
+        }
+        else{
+            return V100_Types.ERROR_LIBS_NOT_LOADED;
+        }
+    }
+    
+    public int V100GetConfig(V100_DEVICE_TRANSPORT_INFO pDev, V100_Types._V100_INTERFACE_CONFIGURATION_TYPE ICT){
+        if(libsLoaded == true){
+            return V100_Get_Config(pDev, ICT);
+        }
+        else{
+           return V100_Types.ERROR_LIBS_NOT_LOADED;
+        }
+    }
+    
+    public int V100GetCmd(V100_DEVICE_TRANSPORT_INFO pDev, V100_Types._V100_INTERFACE_COMMAND_TYPE pCmd){
+        if(libsLoaded == true){
+            return V100_Get_Cmd(pDev, pCmd);
+        }
+        else{
+            return V100_Types.ERROR_LIBS_NOT_LOADED;
+        }
+    }
+    
+    public int V100SetCmd(V100_DEVICE_TRANSPORT_INFO pDev, V100_Types._V100_INTERFACE_COMMAND_TYPE pCmd){
+        if(libsLoaded == true){
+            return V100_Set_Cmd(pDev, pCmd);
+        }
+        else{
+            return V100_Types.ERROR_LIBS_NOT_LOADED;
+        }
+    }
+    
+    public int V100SetOption(V100_DEVICE_TRANSPORT_INFO pDev, int optType, int data) {
+        if(libsLoaded == true){
+            return V100_Set_Option(pDev, optType, data);
+        }
+        else{
+            return V100_Types.ERROR_LIBS_NOT_LOADED;
+        }
+    }
+    
+    public int V100Verify378(V100_DEVICE_TRANSPORT_INFO pDev, 
+                            byte[] pProbeTemplate,
+                            int nProbeTemplateSize){
+        if(libsLoaded == true){
+            return V100_Verify_378(pDev, 
+                            pProbeTemplate,
+                            nProbeTemplateSize);
+        }
+        else{
+            return V100_Types.ERROR_LIBS_NOT_LOADED;
+        }
+    }
+    
+    public int V100WaitForOperationCompletion(V100_DEVICE_TRANSPORT_INFO pDev){
+        if(libsLoaded == true){
+            return WaitForOperationCompletion(pDev);
+        }
+        else{
+            return V100_Types.ERROR_LIBS_NOT_LOADED;
+        }
+    }
+    
+    
+    /*********** 1-N Commands ***********/
+    
+    public int V100IDCommit(V100_DEVICE_TRANSPORT_INFO pDev){
+        if(libsLoaded == true){
+            return V100_ID_Commit(pDev);
+        }
+        else{
+            return V100_Types.ERROR_LIBS_NOT_LOADED;
+        }
+    }
+    
+    public int V100IDCreateDB(V100_DEVICE_TRANSPORT_INFO pDev, V100_Types._MX00_DB_INIT_STRUCT dbInitStruct){
+        if(libsLoaded == true){
+            return V100_ID_Create_DB(pDev, dbInitStruct);
+        }
+        else{
+            return -1; // libs not loaded
+        }
+    }
+    
+    public int V100IDDeleteDB(V100_DEVICE_TRANSPORT_INFO pDev, int nDBNo){
+        if(libsLoaded == true){
+            return V100_ID_Delete_DB(pDev, nDBNo);
+        }
+        else{
+            return V100_Types.ERROR_LIBS_NOT_LOADED;
+        }
+    }
+    
+    public int V100IDDeleteUserRecord(V100_DEVICE_TRANSPORT_INFO pDev, V100_Types._MX00_ID_USER_RECORD userRecord, boolean bDeleteAllFingers){
+        if(libsLoaded == true){
+            return V100_ID_Delete_User_Record(pDev, userRecord, bDeleteAllFingers);
+        }
+        else{
+            return V100_Types.ERROR_LIBS_NOT_LOADED;
+        }
+    }
+    
+    public int V100IDEnrollUserRecord(V100_DEVICE_TRANSPORT_INFO pDev, V100_Types._MX00_ID_USER_RECORD userRecord){
+        if(libsLoaded == true){
+            return V100_ID_Enroll_User_Record(pDev, userRecord);
+        }
+        else{
+            return V100_Types.ERROR_LIBS_NOT_LOADED;
+        }
+    }
+    
+    public int V100IDGetCaptureData(V100_DEVICE_TRANSPORT_INFO pDev, int nCaptureType, byte[] pImage, int[] nImageSize, byte[] pTemplate, int[] nTemplateSize, int[] nSpoofScore, boolean bGetImage, boolean bGetTemplate, boolean bGetSpoofScore){
+        if(libsLoaded == true){
+            return V100_ID_Get_Capture_Data(pDev, nCaptureType, pImage, nImageSize, pTemplate, nTemplateSize, nSpoofScore, bGetImage, bGetTemplate, bGetSpoofScore);
+        }
+        else{
+            return V100_Types.ERROR_LIBS_NOT_LOADED;
+        }
+    }
+    
+    public int V100IDGetDBMetrics(V100_DEVICE_TRANSPORT_INFO pDev, V100_Types._MX00_DB_METRICS pDBMetrics, boolean bGetCurrent){
+        if(libsLoaded == true){
+            return V100_ID_Get_DB_Metrics(pDev, pDBMetrics, bGetCurrent);
+        }
+        else{
+            return V100_Types.ERROR_LIBS_NOT_LOADED;
+        }
+    }
+    
+    public int V100IDGetImage(V100_DEVICE_TRANSPORT_INFO pDev, int nCaptureType, byte[] pImage, int[] nImageSize){
+        if(libsLoaded == true){
+            return V100_ID_Get_Image(pDev, nCaptureType, pImage, nImageSize);
+        }
+        else{
+            return V100_Types.ERROR_LIBS_NOT_LOADED;
+        }
+    }
+    
+    public int V100IDGetParameters(V100_DEVICE_TRANSPORT_INFO pDev, V100_Types._MX00_ID_PARAMETERS pIDParams){
+        if(libsLoaded == true){
+            return V100_ID_Get_Parameters(pDev, pIDParams);
+        }
+        else{
+            return V100_Types.ERROR_LIBS_NOT_LOADED;
+        }
+    }
+    
+    public int V100IDGetResult(V100_DEVICE_TRANSPORT_INFO pDev, V100_Types._MX00_ID_RESULT pIDResults){
+        if(libsLoaded == true){
+            return V100_ID_Get_Result(pDev, pIDResults);
+        }
+        else{
+            return V100_Types.ERROR_LIBS_NOT_LOADED;
+        }
+    }
+    
+    public int V100IDGetSpoofScore(V100_DEVICE_TRANSPORT_INFO pDev, int nCaptureType, int[] nSpoofScore){
+        if(libsLoaded == true){
+            return V100_ID_Get_Spoof_Score(pDev, nCaptureType, nSpoofScore);
+        }
+        else{
+            return V100_Types.ERROR_LIBS_NOT_LOADED;
+        }
+    }
+    
+    public int V100IDGetSystemMetrics(V100_DEVICE_TRANSPORT_INFO pDev, List<V100_Types._MX00_DB_METRICS>pDBMetrics, int[] nNumDBsFound){
+        if(libsLoaded == true){
+            int rc = V100_ID_Get_System_Metrics_Size(pDev, nNumDBsFound);
+            if (rc != V100_Types.GEN_OK) {
+                return rc;
+            }
+            
+            V100_Types types = new V100_Types();
+            V100_Types._MX00_DB_METRICS[] pMetrics = new V100_Types._MX00_DB_METRICS[nNumDBsFound[0]];
+            for (int i = 0; i < nNumDBsFound[0]; i++) {
+                pMetrics[i] = types.new _MX00_DB_METRICS();
+            }
+            rc = V100_ID_Get_System_Metrics_Values(pDev, pMetrics);
+            
+            pDBMetrics.clear();
+            for (int i = 0; i < nNumDBsFound[0]; i++) {
+                pDBMetrics.add(pMetrics[i]);
+            }
+                
+            return rc;
+        }
+        else{
+            return V100_Types.ERROR_LIBS_NOT_LOADED;
+        }
+    }
+    
+    public int V100IDGetTemplate(V100_DEVICE_TRANSPORT_INFO pDev, int nCaptureType, byte[] pTemplate, int[] nTemplateSize){
+        if(libsLoaded == true){
+            return V100_ID_Get_Template(pDev, nCaptureType, pTemplate, nTemplateSize);
+        }
+        else{
+            return V100_Types.ERROR_LIBS_NOT_LOADED;
+        }
+    }
+    
+    public int V100IDGetUserRecord(V100_DEVICE_TRANSPORT_INFO pDev, short nIndex, V100_Types._MX00_ID_USER_RECORD userRecord, V100_Types._MX00_TEMPLATE_INSTANCE[] userRecordTemplates){
+        if(libsLoaded == true){
+            return V100_ID_Get_User_Record(pDev, nIndex, userRecord, userRecordTemplates);
+        }
+        else{
+            return V100_Types.ERROR_LIBS_NOT_LOADED;
+        }
+    }
+    
+    public int V100IDGetUserRecordHeader(V100_DEVICE_TRANSPORT_INFO pDev, short nIndex, V100_Types._MX00_ID_USER_RECORD userRecord){
+        if(libsLoaded == true){
+            return V100_ID_Get_User_Record_Header(pDev, nIndex, userRecord);
+        }
+        else{
+            return V100_Types.ERROR_LIBS_NOT_LOADED;
+        }
+    }
+    
+    public int V100IDIdentify(V100_DEVICE_TRANSPORT_INFO pDev){
+        if(libsLoaded == true){
+            return V100_ID_Identify(pDev);
+        }
+        else{
+            return V100_Types.ERROR_LIBS_NOT_LOADED;
+        }
+    }
+    
+    public int V100IDIdentify378(V100_DEVICE_TRANSPORT_INFO pDev, byte[] pTemplate, int nSizeTemplate){
+        if(libsLoaded == true){
+            return V100_ID_Identify_378(pDev, pTemplate, nSizeTemplate);
+        }
+        else{
+            return V100_Types.ERROR_LIBS_NOT_LOADED;
+        }
+    }
+    
+    public int V100IDPurgeDBAll(V100_DEVICE_TRANSPORT_INFO pDev){
+        if(libsLoaded == true){
+            return V100_ID_Purge_DB_All(pDev);
+        }
+        else{
+            return V100_Types.ERROR_LIBS_NOT_LOADED;
+        }
+    }
+    
+    public int V100IDSetAPIKey(V100_DEVICE_TRANSPORT_INFO pDev, byte[] pAPIKey, int nLength){
+        if(libsLoaded == true){
+            return V100_ID_Set_API_Key(pDev, pAPIKey, nLength);
+        }
+        else{
+            return V100_Types.ERROR_LIBS_NOT_LOADED;
+        }
+    }
+    
+    public int V100IDSetParameters(V100_DEVICE_TRANSPORT_INFO pDev, V100_Types._MX00_ID_PARAMETERS pIDParams){
+        if(libsLoaded == true){
+            return V100_ID_Set_Parameters(pDev, pIDParams);
+        }
+        else{
+            return V100_Types.ERROR_LIBS_NOT_LOADED;
+        }
+    }
+    
+    public int V100IDSetUserRecord(V100_DEVICE_TRANSPORT_INFO pDev, V100_Types._MX00_ID_USER_RECORD userRecord, V100_Types._MX00_TEMPLATE_INSTANCE[] userRecordTemplates){
+        if(libsLoaded == true){
+            return V100_ID_Set_User_Record(pDev, userRecord, userRecordTemplates);
+        }
+        else{
+            return V100_Types.ERROR_LIBS_NOT_LOADED;
+        }
+    }
+    
+    public int V100IDSetWorkingDB(V100_DEVICE_TRANSPORT_INFO pDev, int nDB){
+        if(libsLoaded == true){
+            return V100_ID_Set_Working_DB(pDev, nDB);
+        }
+        else{
+            return V100_Types.ERROR_LIBS_NOT_LOADED;
+        }
+    }
+    
+    public int V100IDVerify378(V100_DEVICE_TRANSPORT_INFO pDev, V100_Types._MX00_ID_USER_RECORD userRecord, byte[] pTemplate, int nSizeTemplate, short nConsiderFinger){
+        if(libsLoaded == true){
+            return V100_ID_Verify_378(pDev, userRecord, pTemplate, nSizeTemplate, nConsiderFinger);
+        }
+        else{
+            return V100_Types.ERROR_LIBS_NOT_LOADED;
+        }
+    }
+    
+    public int V100IDVerifyMany(V100_DEVICE_TRANSPORT_INFO pDev, byte[][] pTemplates, int[] pSizeTemplates, int nNumTemplates){
+        if(libsLoaded == true){
+            return V100_ID_Verify_Many(pDev, pTemplates, pSizeTemplates, nNumTemplates);
+        }
+        else{
+            return V100_Types.ERROR_LIBS_NOT_LOADED;
+        }
+    }
+    
+    public int V100IDVerifyUserRecord(V100_DEVICE_TRANSPORT_INFO pDev, V100_Types._MX00_ID_USER_RECORD userRecord, short nConsiderFinger){
+        if(libsLoaded == true){
+            return V100_ID_Verify_User_Record(pDev, userRecord, nConsiderFinger);
+        }
+        else{
+            return V100_Types.ERROR_LIBS_NOT_LOADED;
+        }
+    }
+    
+    
+    
+    /*
+    *
+    *   PRIVATE NATIVE FUNCTIONS
+    *
+    */
+    
+    private native int V100_Arm_Trigger(V100_DEVICE_TRANSPORT_INFO dti, int nMode);
+    private native int V100_Cancel_Operation(V100_DEVICE_TRANSPORT_INFO dti);
+    private native int V100_Exchange_Session_Key(V100_DEVICE_TRANSPORT_INFO dti);
+    private native int V100_Clear(V100_DEVICE_TRANSPORT_INFO dti);
+    private native int V100_Config_Comport(V100_DEVICE_TRANSPORT_INFO dti, int nBaudRate);
+    private native int V100_Get_Acq_Status(V100_DEVICE_TRANSPORT_INFO dti, int[] nAcqStatus);
+    private native int V100_Get_Capture_Template(V100_DEVICE_TRANSPORT_INFO dti, 
+                            int nCaptureType,
+                            byte[] pTemplate, 
+                            int[] nTemplateSize);
+    private native int V100_Get_Composite_Image(V100_DEVICE_TRANSPORT_INFO dti, 
+                            byte[] pImage, 
+                            int[] nSpoofValue, 
+                            int[] nImageSize);
+    private native int V100_Get_DB_Metrics(V100_DEVICE_TRANSPORT_INFO dti, V100_Types._V100_DB_METRICS dbMetrics);    
+    private native int V100_Get_FIR_Image(V100_DEVICE_TRANSPORT_INFO dti, 
+                            int nFIRType, 
+                            int nFingerType, 
+                            byte[] pFIRImage, 
+                            int[] nFIRImageSize);
+    private native int V100_Get_GPIO(V100_DEVICE_TRANSPORT_INFO dti, byte[] cMask);
+    private native int V100_Get_Image(V100_DEVICE_TRANSPORT_INFO dti, int nType, byte[] pImage, int[] nImageSize);
+    private native int V100_Get_OP_Status(V100_DEVICE_TRANSPORT_INFO dti, V100_Types._V100_OP_STATUS opStatus);
+    
+    
+    private native int V100_Get_Serial(V100_DEVICE_TRANSPORT_INFO dti, int[] serialNumber);
+    private native String V100_Get_Version(V100_DEVICE_TRANSPORT_INFO dti, int[] returnCode);
+    private native int V100_Get_Status(V100_DEVICE_TRANSPORT_INFO dti, V100_Types._V100_INTERFACE_STATUS_TYPE IST);
+    private native int V100_Get_Tag(V100_DEVICE_TRANSPORT_INFO dti, byte[] pTag, int[] nTagLength);
+    private native int V100_Get_Template(V100_DEVICE_TRANSPORT_INFO dti, byte[] pTemplate, int[] nTemplateSize);
+    private native int V100_Reset(V100_DEVICE_TRANSPORT_INFO dti);
+    private native int V100_Reset_Security(V100_DEVICE_TRANSPORT_INFO dti, int arg);
+    private native int V100_Set_GPIO(V100_DEVICE_TRANSPORT_INFO dti, byte[] mask);
+    private native int V100_Set_LED(V100_DEVICE_TRANSPORT_INFO dti, int nControl);
+    private native int V100_Set_Tag(V100_DEVICE_TRANSPORT_INFO dti, byte[] pTag, int nTagLength);
+    private native int V100_Set_Template(V100_DEVICE_TRANSPORT_INFO dti,
+                            byte [] pTemplate,
+                            int nTemplateSize);
+    private native int V100_Truncate_378(V100_DEVICE_TRANSPORT_INFO dti,
+                            int nMaxTemplateSize,
+                            byte[] pInTemplate,
+                            int nInTemplateSize,
+                            byte[] pOutTemplate,
+                            int[] nOutTemplateSize);
+    private native int V100_Update_Firmware(V100_DEVICE_TRANSPORT_INFO dti, byte[] pFirmwareStream, int nFWStreamSize);
+    private native int V100_Verify(V100_DEVICE_TRANSPORT_INFO dti,
+                            byte[] pTemplate,
+                            int nTemplateSize,
+                            int[] nSpoof,
+                            int[] nMatchScore);
+    private native int V100_Vid_Stream(V100_DEVICE_TRANSPORT_INFO dti, int nMode);
+    private native int V100_WaitForFingerClear(V100_DEVICE_TRANSPORT_INFO dti);
+    
+    
+    
+        
+    private native int V100_Get_Num_USB_Devices(int[] nNumDevices);  
+    private native int V100_Open(V100_DEVICE_TRANSPORT_INFO dti);       
+    private native int V100_Open_Ex(V100_DEVICE_TRANSPORT_INFO dti);
+    private native int V100_Close(V100_DEVICE_TRANSPORT_INFO dti);  
+    private native int V100_Get_Sensor_Type(V100_DEVICE_TRANSPORT_INFO dti, int[] sensorType);
+    private native int V100_Capture(V100_DEVICE_TRANSPORT_INFO pDev,
+                             byte[] pCompositeImage,
+                             int[]  nWidth,
+                             int[]  nHeight,
+                             byte[] pTemplate,
+                             int[]  nTemplateSize,
+                             int[]  Spoof,
+                             int    getComposite,
+                             int    getTemplate);
+    
+            private native int V100_Capture_Cb(V100_DEVICE_TRANSPORT_INFO pDev,
+                             byte[] pCompositeImage,
+                             int[]  nWidth,
+                             int[]  nHeight,
+                             byte[] pTemplate,
+                             int[]  nTemplateSize,
+                             int[]  Spoof,
+                             int    getComposite,
+                             int    getTemplate,
+                             IStatusCallbackListener callbackListener);
+    
+        private native int V100_Match(V100_DEVICE_TRANSPORT_INFO pDev, 
+                            byte[] pProbeTemplate,
+                            int nProbeTemplateSize,
+                            byte[] pGalleryTemplate,
+                            int nGalleryTemplateSize,
+                            int[] MatchScore);
+    
+    private native int V100_Get_Config(V100_DEVICE_TRANSPORT_INFO pDev, V100_Types._V100_INTERFACE_CONFIGURATION_TYPE ICT);
+    
+    private native int V100_Get_Cmd(V100_DEVICE_TRANSPORT_INFO pDev, V100_Types._V100_INTERFACE_COMMAND_TYPE pCmd);
+    
+    private native int V100_Set_Cmd(V100_DEVICE_TRANSPORT_INFO pDev, V100_Types._V100_INTERFACE_COMMAND_TYPE pCmd);
+    
+    private native int V100_Set_Option(V100_DEVICE_TRANSPORT_INFO pDev, int optType, int data);
+    
+    private native int WaitForOperationCompletion(V100_DEVICE_TRANSPORT_INFO pDev);
+    
+    private native int V100_Verify_378(V100_DEVICE_TRANSPORT_INFO pDev, 
+                            byte[] pProbeTemplate,
+                            int nProbeTemplateSize);
+    
+    /*********** 1-N Commands ***********/
+    
+    private native int V100_ID_Commit(V100_DEVICE_TRANSPORT_INFO pDev);
+    
+    private native int V100_ID_Create_DB(V100_DEVICE_TRANSPORT_INFO pDev, V100_Types._MX00_DB_INIT_STRUCT dbInitStruct);
+    
+    private native int V100_ID_Delete_DB(V100_DEVICE_TRANSPORT_INFO pDev, int nDBNo);
+    
+    private native int V100_ID_Delete_User_Record(V100_DEVICE_TRANSPORT_INFO pDev, V100_Types._MX00_ID_USER_RECORD userRecord, boolean bDeleteAllFingers);
+    
+    private native int V100_ID_Enroll_User_Record(V100_DEVICE_TRANSPORT_INFO pDev, V100_Types._MX00_ID_USER_RECORD userRecord);
+    
+    private native int V100_ID_Get_Capture_Data(V100_DEVICE_TRANSPORT_INFO pDev, int nCaptureType, byte[] pImage, int[] nImageSize, byte[] pTemplate, int[] nTemplateSize, int[] nSpoofScore, boolean bGetImage, boolean bGetTemplate, boolean bGetSpoofScore);
+    
+    private native int V100_ID_Get_DB_Metrics(V100_DEVICE_TRANSPORT_INFO pDev, V100_Types._MX00_DB_METRICS pDBMetrics, boolean bGetCurrent);
+    
+    private native int V100_ID_Get_Image(V100_DEVICE_TRANSPORT_INFO pDev, int nCaptureType, byte[] pImage, int[] nImageSize);
+    
+    private native int V100_ID_Get_Parameters(V100_DEVICE_TRANSPORT_INFO pDev, V100_Types._MX00_ID_PARAMETERS pIDParams);
+    
+    private native int V100_ID_Get_Result(V100_DEVICE_TRANSPORT_INFO pDev, V100_Types._MX00_ID_RESULT pIDResults);
+    
+    private native int V100_ID_Get_Spoof_Score(V100_DEVICE_TRANSPORT_INFO pDev, int nCaptureType, int[] nSpoofScore);
+    
+    private native int V100_ID_Get_System_Metrics_Size(V100_DEVICE_TRANSPORT_INFO pDev, int[] nNumDBsFound);
+    
+    private native int V100_ID_Get_System_Metrics_Values(V100_DEVICE_TRANSPORT_INFO pDev, V100_Types._MX00_DB_METRICS[] pDBMetrics);
+    
+    private native int V100_ID_Get_Template(V100_DEVICE_TRANSPORT_INFO pDev, int nCaptureType, byte[] pTemplate, int[] nTemplateSize);
+    
+    private native int V100_ID_Get_User_Record(V100_DEVICE_TRANSPORT_INFO pDev, short nIndex, V100_Types._MX00_ID_USER_RECORD userRecord, V100_Types._MX00_TEMPLATE_INSTANCE[] userRecordTemplates);
+    
+    private native int V100_ID_Get_User_Record_Header(V100_DEVICE_TRANSPORT_INFO pDev, short nIndex, V100_Types._MX00_ID_USER_RECORD userRecord);
+    
+    private native int V100_ID_Identify(V100_DEVICE_TRANSPORT_INFO pDev);
+    
+    private native int V100_ID_Identify_378(V100_DEVICE_TRANSPORT_INFO pDev, byte[] pTemplate, int nSizeTemplate);
+    
+    private native int V100_ID_Purge_DB_All(V100_DEVICE_TRANSPORT_INFO pDev);
+    
+    private native int V100_ID_Set_API_Key(V100_DEVICE_TRANSPORT_INFO pDev, byte[] pAPIKey, int nLength);
+    
+    private native int V100_ID_Set_Parameters(V100_DEVICE_TRANSPORT_INFO pDev, V100_Types._MX00_ID_PARAMETERS pIDParams);
+    
+    private native int V100_ID_Set_User_Record(V100_DEVICE_TRANSPORT_INFO pDev, V100_Types._MX00_ID_USER_RECORD userRecord, V100_Types._MX00_TEMPLATE_INSTANCE[] userRecordTemplates);
+    
+    private native int V100_ID_Set_Working_DB(V100_DEVICE_TRANSPORT_INFO pDev, int nDB);
+    
+    private native int V100_ID_Verify_378(V100_DEVICE_TRANSPORT_INFO pDev, V100_Types._MX00_ID_USER_RECORD userRecord, byte[] pTemplate, int nSizeTemplate, short nConsiderFinger);
+    
+    private native int V100_ID_Verify_Many(V100_DEVICE_TRANSPORT_INFO pDev, byte[][] pTemplates, int[] pSizeTemplates, int nNumTemplates);
+    
+    private native int V100_ID_Verify_User_Record(V100_DEVICE_TRANSPORT_INFO pDev, V100_Types._MX00_ID_USER_RECORD userRecord, short nConsiderFinger);
+    
+    
+}

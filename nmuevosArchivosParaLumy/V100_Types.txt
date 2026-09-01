@@ -1,0 +1,709 @@
+/*************************************************************************************************************************
+**                                                                                                                      **
+** ©Copyright 2023 HID Global Corporation/ASSA ABLOY AB. ALL RIGHTS RESERVED.                                           **
+**                                                                                                                      **
+** For a list of applicable patents and patents pending, visit www.hidglobal.com/patents                                **
+**                                                                                                                      **
+** THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR                                           **
+** IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS                                     **
+** FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR                                       **
+** COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER                                       **
+** IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN                                              **
+** CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                                           **
+**                                                                                                                      **
+*************************************************************************************************************************/
+
+package vcomexample;
+
+/**
+ *
+ * @author rmckee
+ */
+public class V100_Types {
+    
+    public final int MAX_378_TEMPLATE_SIZE = 2048;
+        
+    public final class  _V100_INTERFACE_CONFIGURATION_TYPE {
+    
+ 	public int  
+	/*** REVISION/CONFIGURATION INFORMATION ***/
+	Vendor_Id,			// Vendor Identification
+	Product_Id,			// Product Identification
+	Device_Serial_Number,		// Unique Device Serial Number
+        Hardware_Rev,			// HW Revision Number 			(xxx.xxx.xxx)        
+             
+	Firmware_Rev,			// FW Revision Number 			(xxx.xxx.xxx)
+	Spoof_Rev,			// Spoof Revision Number		(xxx.xxx.xxx)        
+                        
+	PreProc_Rev,			// PreProcessor Revision Number (xxx.xxx.xxx)
+	Feature_Extractor_Rev,		// Feature Extractor Revision Number (xxx.xxx.xxx)
+	Matcher_Rev,			// Matcher Revision Number 		(xxx.xxx.xxx)
+	ID_Rev,				// Identifier Revision Number 	(xxx.xxx.xxx)
+	Imager_Chip_Version,		// Imager Chip Silicon Version 
+	Number_Image_Planes,		// Number of Image Planes in Native Image Stack
+	Native_Image_Size_X,		// Number of Pixels in Column (Native)
+	Native_Image_Size_Y,		// Number Pixels in Rows (Native)
+	Native_DPI,			// Native Resolution Pixel Dots/Inch
+	Composite_Image_Size_X,		// Pixels in Col. Composite Processed Image (500 dpi)
+	Composite_Image_Size_Y,		// Pixels in Row Composite Processed Image (500 dpi)
+	Composite_DPI,			// Composite Image Resolution
+	Image_Format,			// Format of Native Images (_V100_IMAGE_FORMAT_TYPE)
+	Boresight_X,			// Pixel Units wrt Native Coords
+	Boresight_Y,			// Pixel Units wrt Native Coords
+	LED_Wavelength1,		// Nanometers (State Ordered)
+	LED_Wavelength2,		// Nanometers (State Ordered)
+	LED_Wavelength3,		// Nanometers (State Ordered)
+	LED_Wavelength4,		// Nanometers (State Ordered)
+	LED_Type1,			// (_V100_LED_TYPE)
+	LED_Type2,			// (_V100_LED_TYPE)
+	LED_Type3,			// (_V100_LED_TYPE)
+	LED_Type4,			// (_V100_LED_TYPE)
+	State1_Exposure,		// Current Exp Value from Last Image Acquisition
+	State2_Exposure,
+	State3_Exposure,
+	State4_Exposure,
+	State1_Dark_Exposure,		// Current Exp Value from Dark Frame Acquisition
+	State2_Dark_Exposure,
+	State3_Dark_Exposure,
+	State4_Dark_Exposure,
+		 
+	/*** SERVICE AVAILABILITY BOOLEANS ***/
+	Phy_Interface_Available, 	// Physical Interfaces Available (_V100_PHY_INTERFACE_TYPE)
+	 
+	/*** SERVICE AVAILABILITY BIT FIELSDS ***/
+	PreProc_Available,		// PreProcessors Available (_V100_PREPROC_TYPE)
+	Feature_Extract_Available,	// Feature Extractors Available (_V100_FE_TYPE)
+	Template_Match_Available, 	// Template Matchers Available (_V100_FM_TYPE)
+	Template_Format_Available, 	// Template Formats Available _V100_TEMPLATE_FORMAT_TYPE)
+	Template_ID_Available,		// Template Identification Available ( _V100_ID_TYPE)
+	Presence_Detect_Available,	// Presence Detection Available (_V100_PRESENCE_DETECTION_TYPE)
+	FW_Flash_Available,		// In-circuit Flash Capability Available (_V100_FLASH_TYPE)
+	Spoof_Available,		// Spoof Algorithms Available (_V100_SPOOF_TYPE)
+	Struct_Size,			// Size in Bytes of This Structure	
+		 
+	
+	pImageBuffer,			// Image Buffer Location in BF Heap
+	pPDBuffer,			// Presence Detection Buffer
+	pStaticMask,			// Visible Aperture Mask
+	pDarkBuffer,
+	pCompositeBuffer, 
+	 
+ 	 
+	Device_Serial_Number_Ex,	// Extended Serial Number data (Upper Word of SN on device - M31x and later devices only. For M30x with firmware 16440 or later)
+	MfgStateFlag,			// Manufacturing State Flag (May not be in early M31x units)
+	/*** RESERVED EXPANSION ***/
+	Device_Cfg_Type,		// FW configuration type
+	RESERVED_3,			// RESERVED for Future Use
+	RESERVED_4,			// RESERVED for Future Use
+	RESERVED_5;			// RESERVED for Future Use
+		
+    }
+    
+        
+    public final class _V100_INTERFACE_COMMAND_TYPE {
+        /*** USER COMMANDS ***/
+	public int
+	Trigger_Delay,			// (msec) Delay btw Pres. Detect and Acq
+	TimeOut,			// (sec) Timeout on Blocking Ops
+	Override_Trigger,		// if TRUE, override presence detection
+	Override_HeartBeat_Display,	// if TRUE, Turns off HeartBeat
+	Override_Default_LED,		// if TRUE, Turns off default LED behavior
+	Match_Threshold,		// Thresold Score for Matching
+	Set_Exposure_Mode,		// Manual or Auto Exposure Mode   
+	Select_PreProc,			// Bitfield to Select PreProcessor
+	Select_Identifier,		// Bitfield to Select Identifier
+	Select_Matcher,			// Bitfield to Select Matcher
+	Select_Extractor,		// Bitfield to Select Extractor
+	Select_Spoof_Model,		// Bitfield to Select Spoof Model
+	Select_Template_Format,		// Template Format
+	Exposure1,			// Exposure Override for ACQ State 1 (Lines)
+	Exposure2,			// Exposure Override for ACQ State 2 (Lines)
+	Exposure3,			// Exposure Override for ACQ State 3 (Lines)
+	Exposure4,			// Exposure Override for ACQ State 4 (Lines)
+	Gain1,				// Analog Gain Override for ACQ State 
+	Gain2,				// Legal values 16-64 dec
+	Gain3,				//
+	Gain4,				//
+	Struct_Size,			// Size in Bytes of This Structure	
+	Mfg_Hook,			// 
+	Select_Crop_Level,		// 
+	Calculate_Quality,
+	FW_Class,
+        /*** RESERVED EXPANSION ***/	  
+	PAD_0,
+	PAD_1,
+	PAD_2,
+	PAD_3,
+	PAD_4,
+	PAD_5; 
+    }    
+    
+    
+    // DB Initialization flags
+    public final static int
+        DB_INIT_FLAG_ID_DEFAULT     = 0x0001,	// default behavior. Identification and Verification DB
+        DB_INIT_FLAG_VERIFY_ONLY    = 0x0004,	// Verify-only database.  
+        DB_INIT_FLAG_ID_ENHANCED    = 0x0010;	// Enhanced templates with 1:N search capabilies.. If used this should be ORed with one of the above two flags
+    
+    public final class _MX00_DB_INIT_STRUCT {
+        
+        public int
+        nGroupID,               // Which group to use
+        nUsers,                 // Maximum users this database can store
+        nFingersPerUser,        // Fingers per user in this database
+        nInstancesPerFinger,    // Impressions perfinger in the database
+        nFlags,                 // Flags for DB Init
+        nReserved_0,            // Reserved for future use
+        nReserved_1,            // Reserved for future use
+        nReserved_2;            // Reserved for future use
+    }
+    
+    // TODO: Need to add db init enums
+    
+    public final class _MX00_ID_USER_RECORD {
+        public int
+        nGroupID,
+        nFinger,
+        nInstances;
+        public String szUserID; // Max 32 characters
+    }
+    
+    public final class _MX00_DB_METRICS {
+        public int
+        nGroupID,
+        nMaxUsers,
+        nFingersPerUser,
+        nInstancesPerFinger,
+        nFlags,
+        nCurEnrolledUserFingers,
+        nCurEnrolledUsers;
+    }
+    
+    public final class _V100_DB_METRICS{
+        public int
+        nNumUserRecordsOnDrive,		// Number of User Records on Drive 
+	nNumUserRecordsFreeEstimate,	// Estimate on number of user records that can still be enrolled.
+	nLastMatchScore,		// Last Match Score
+	nLastSpoofScore;                // Last Spoof Score
+    }
+    
+    public final class _V100_INTERFACE_STATUS_TYPE{
+        public int
+        General_Error,				
+        Service_Error, 				
+        BIT_Error,					
+        COM_Error,					
+        USB_Error,					
+        Flash_Updater_Status,		
+        Struct_Size,				
+        Latent_Detected,	// Latent detected on last capture (1 if true, 0 if false; V30x-40, V31x, and V42x-NC only)
+        Boot_Error,					
+        /*** RESERVED EXPANSION ***/
+        RESERVED_2,					
+        RESERVED_3,					
+
+        /*** PADDING ***/
+        PAD_0,
+        PAD_1,
+        PAD_2,
+        PAD_3,
+        PAD_4;        
+}
+    
+    // _V100_TRIGGER_MODE
+    public final static int
+        TRIGGER_OFF		= 0x00,
+	TRIGGER_ON		= 0x01,
+	TRIGGER_FINGER_DETECT	= 0x04,
+	TRIGGER_LAST		= 0xFF;     
+    
+    // ID Parameters flags
+    public final static int
+        FLAG_FAIL_ENROLL_ON_SPOOF		=0x0002,	// Fail Enroll, if Spoof is detected.
+        FLAG_FAIL_VERIFY_ON_SPOOF		=0x0004,	// Fail Verify, if Spoof is detected.
+        FLAG_FAIL_IDENTIFY_ON_SPOOF		=0x0100,	// Fail Identify, if Spoof is detected.
+        FLAG_ENROLLMENT_QUALIFICATION           =0x0008,	// Perform inter-enrollment matching.
+        FLAG_VERIFICATION_MUST_MATCH_ONE	=0x0010,	// Must only match one enrolled template to verify.
+        FLAG_VERIFICATION_MUST_MATCH_ALL	=0x0020,	// Must match all enrolled templates to verify.
+        FLAG_FAIL_ENROLL_ON_DUPLICATE           =0x0080;	// Fail Enroll, if duplicate is detected.
+    
+    // ID Parameters security levels
+    public final static int
+        LOW_SECURITY_LEVEL = 1,
+        MEDIUM_SECURITY_LEVEL = 2,
+        HIGH_SECURITY_LEVEL = 3,
+        VERY_HIGH_SECURITY_LEVEL = 4,
+        MAX_SECURITY_LEVEL = 4;
+    
+    public final class _MX00_ID_PARAMETERS {
+        public int
+        nSecurityLevel,
+        nFlags,
+        nParm2,
+        nParm3,
+        nParm4;
+    }
+    
+    public final class _MX00_ID_RESULT{
+        public int eLastStatus;
+        public String szUserID;
+        public int nFinger,
+        nIDScore,
+		nM1Score,
+		nM2Score,
+		nSpoofScore,
+		nIDTime,
+		nC1Time,
+		nC2Time;
+    }
+    
+    public final class _MX00_TEMPLATE_INSTANCE {
+        public byte[] p378Template = new byte[MAX_378_TEMPLATE_SIZE];
+    }
+    
+    public final class _V100_OP_STATUS{
+        public int eMacroCommand,   // _V100_COMMAND_SET
+        nMode,                      // _V100_OP_MODE
+        nParameter,
+        eAcqStatus;                 // _V100_ACQ_STATUS_TYPE
+    }
+               
+    // _V100_OP_MODE
+    public final static int
+        NO_OP           = 0,
+	OP_IN_PROGRESS  = 1,
+	OP_ERROR        = 2,
+	OP_COMPLETE     = 3;
+        
+    // _V100_SENSOR_TYPE Enum
+    public final static int 
+        UNKNOWN_LUMI_DEVICE     = 0,
+	VENUS_V30X              = 1,	// V30x
+	MERCURY_M30X            = 2,	// M30x
+	MERCURY_M31X            = 3,	// M31x
+	VENUS_V31X              = 4,	// V31x
+	VENUS_V371              = 5,	// V371
+	VENUS_V40X              = 6,	// V40x
+	VENUS_V42X              = 7,	// V42x
+	MERCURY_M32X            = 8,	// M32x
+	MERCURY_M42X            = 9,	// M42X
+	MERCURY_M21X            = 10,
+	VENUS_V31X_01           = 11,
+        VENUS_V32X              = 12,   // V32x, non-secured
+        VENUS_V52X              = 13,   // V52x, secured
+	UNSUPPORTED_LUMI_DEVICE = 99;
+    
+    public static String GetSensorTypeStr(int nType) {
+        switch(nType) {
+            case VENUS_V30X              : return "VENUS_V30X";
+            case MERCURY_M30X            : return "MERCURY_M30X";
+            case MERCURY_M31X            : return "MERCURY_M31X";
+            case VENUS_V31X              : return "VENUS_V31X";
+            case VENUS_V371              : return "VENUS_V371";
+            case VENUS_V40X              : return "VENUS_V40X";
+            case VENUS_V42X              : return "VENUS_V42X";
+            case MERCURY_M32X            : return "MERCURY_M32X";
+            case MERCURY_M42X            : return "MERCURY_M42X";
+            case MERCURY_M21X            : return "MERCURY_M21X";
+            case VENUS_V31X_01           : return "VENUS_V31X_01";
+            case VENUS_V32X              : return "VENUS_V32X";
+            case VENUS_V52X              : return "VENUS_V52X";
+            case UNSUPPORTED_LUMI_DEVICE : return "UNSUPPORTED_LUMI_DEVICE";
+            case UNKNOWN_LUMI_DEVICE     : 
+            default:
+                return "UNKOWN_LUMI_DEVICE";
+        }
+    }
+    
+    // _V100_CAPTURE_TYPE Enum
+    public final static int
+	CAPTURE_IMAGE = 0x00,
+	CAPTURE_VERIFY = 0x10,
+	CAPTURE_ENROLL_1 = 0x21,
+	CAPTURE_ENROLL_2 = 0x22,
+	CAPTURE_ENROLL_3 = 0x23,
+	CAPTURE_ENROLL_4 = 0x24,
+	CAPTURE_ENROLL_5 = 0x25,
+	CAPTURE_ENROLL_6 = 0x26,
+	CAPTURE_ENROLL_7 = 0x27,
+	CAPTURE_ENROLL_8 = 0x28,
+	CAPTURE_ENROLL_9 = 0x29,
+	CAPTURE_ENROLL_10 = 0x2A,
+        CAPTURE_FINGER_LIFT = 0x30;
+    
+    
+    // General Error Codes 
+    // VCOM C API _V100_GENERAL_ERROR_CODES V100_ERROR_CODE
+    // Negative values: VCOMExample Java API additional error codes 
+    public static final int ERROR_LIBS_NOT_LOADED = -1,
+        ERROR_LIBS_ALREADY_LOADED = -2,
+        ERROR_INTERNAL = -3,
+        GEN_OK = 0x0000,
+	GEN_ENCRYPTION_FAIL = 0x0001,	// Encryption Fail
+	GEN_DECRYPTION_FAIL = 0x0002,	// Decryption Fail
+	GET_PD_INIT_FAIL = 0x0004,	// Presence Detect Fail
+	PD_HISTOGRAM_FAIL = 0x0008,	// Histogram Fail
+	INVALID_ACQ_MODE = 0x0010,	// Mode Fail
+	BURNIN_THREAD_FAIL = 0x0020,	// thread creation error
+	UPDATER_THREAD_FAIL = 0x0040,	// thread creation error
+	GEN_ERROR_CONNECTION_REFUSED = 0x0079,	// Embedded USB Driver supports only one client app connection
+	GEN_ERROR_START = 0x0080,
+	GEN_ERROR_PROCESSING = 129,
+	GEN_ERROR_VERIFY = 130,
+	GEN_ERROR_MATCH = 131,
+	GEN_ERROR_INTERNAL = 132,
+	GEN_ERROR_INVALID_CMD = 133,
+	GEN_ERROR_PARAMETER = 134,
+	GEN_NOT_SUPPORTED = 135,
+	GEN_INVALID_ARGUEMENT = 136,
+	GEN_ERROR_TIMEOUT = 137,
+	GEN_ERROR_LICENSE = 138,
+	GEN_ERROR_COMM_TIMEOUT = 139,
+	GEN_FS_ERR_CD = 140,
+	GEN_FS_ERR_DELETE = 141,
+	GEN_FS_ERR_FIND = 142,
+	GEN_FS_ERR_WRITE = 143,
+	GEN_FS_ERR_READ = 144,
+	GEN_FS_ERR_FORMAT = 145,
+	GEN_ERROR_MEMORY = 146,
+	GEN_ERROR_RECORD_NOT_FOUND = 147,
+	GEN_VER_INVALID_RECORD_FORMAT = 148,
+	GEN_ERROR_DB_FULL = 149,
+	GEN_ERROR_INVALID_SIZE = 150,
+	GEN_ERROR_TAG_NOT_FOUND = 151,
+	GEN_ERROR_APP_BUSY = 152,
+	GEN_ERROR_DEVICE_UNCONFIGURED = 153,
+	GEN_ERROR_TIMEOUT_LATENT = 154,
+	GEN_ERROR_DB_NOT_LOADED = 155,
+	GEN_ERROR_DB_DOESNOT_EXIST = 156,
+	GEN_ERROR_ENROLLMENTS_DO_NOT_MATCH = 157,
+	GEN_ERROR_USER_NOT_FOUND = 158,
+	GEN_ERROR_DB_USER_FINGERS_FULL = 159,
+	GEN_ERROR_DB_USERS_FULL = 160,
+	GEN_ERROR_USER_EXISTS = 161,
+	GEN_ERROR_DEVICE_NOT_FOUND = 162,
+	GEN_ERROR_DEVICE_NOT_READY = 163,
+	GEN_ERROR_PIPE_READ = 164,
+	GEN_ERROR_PIPE_WRITE = 165,
+	GEN_ERROR_SENGINE_SHUTTING_DOWN = 166,
+	GEN_ERROR_SPOOF_DETECTED = 167,
+	GEN_ERROR_DATA_UNAVAILABLE = 168,
+	GEN_ERROR_CRYPTO_FAIL = 169,
+	GEN_ERROR_CAPTURE_CANCELLED = 170,
+	GEN_ERROR_ENROLLMENT_INCOMPLETE = 171,
+        GEN_OK_NEED_RESET = 172,    
+	GEN_LAST = 173;
+    
+    //Operational Error Codes - VCOM C API _V100_OP_ERROR
+    public static final int 
+        STATUS_OK = 0x00,
+	ERROR_UID_EXISTS = 0x01,
+	ERROR_ENROLLMENT_QUALIFICATION = 0x02,
+	ERROR_UID_DOES_NOT_EXIST = 0x03,
+	ERROR_DB_FULL = 0x04,
+	ERROR_QUALIFICATION = 0x05,
+	ERROR_DEV_TIMEOUT = 0x06,
+	ERROR_USER_CANCELLED = 0x07,
+	ERROR_SPOOF_DETECTED = 0x08,
+	ERROR_DB_EXISTS = 0x09,
+	ERROR_DB_DOES_NOT_EXIST = 0x0A,
+	/* Identification Codes */
+	ERROR_ID_DB_TOO_LARGE = 0x10,
+	ERROR_ID_DB_EXISTS = 0x11,
+	ERROR_ID_USER_EXISTS = 0x12,
+	ERROR_ID_USER_NOT_FOUND = 0x13,
+	STATUS_ID_MATCH = 0x14,
+	STATUS_ID_NO_MATCH = 0x15,
+	ERROR_ID_PARAMETER = 0x16,
+	ERROR_ID_GENERAL = 0x17,
+	ERROR_ID_FILE = 0x18,
+	ERROR_ID_NOT_INITIALIZED = 0x19,
+	ERROR_ID_DB_FULL = 0x1A,
+	ERROR_ID_DB_DOESNT_EXIST = 0x1B,
+	ERROR_ID_DB_NOT_LOADED = 0x1C,
+	ERROR_ID_RECORD_NOT_FOUND = 0x1D,
+	ERROR_ID_FS = 0x1E,
+	ERROR_ID_CREATE_FAIL = 0x1F,
+	ERROR_ID_INTERNAL = 0x20,
+	ERROR_ID_MEM = 0x21,
+	STATUS_ID_USER_FOUND = 0x22,
+	STATUS_ID_USER_NOT_FOUND = 0x23,
+	ERROR_ID_USER_FINGERS_FULL = 0x24,
+	ERROR_ID_USER_MULTI_FINGERS_NOT_FOUND = 0x25,
+	ERROR_ID_USERS_FULL = 0x26,
+	ERROR_ID_OPERATION_NOT_SUPPORTED = 0x27,
+	ERROR_ID_NOT_ENOUGH_SPACE = 0x28,
+	ERROR_ID_DUPLICATE = 0x29,
+	/* Capture */
+	ERROR_CAPTURE_TIMEOUT = 0x30,
+	ERROR_CAPTURE_LATENT = 0x31,
+	ERROR_CAPTURE_CANCELLED = 0x32,
+	ERROR_CAPTURE_INTERNAL = 0x33,
+	/* Update Firmware */
+	ERROR_UPDATE_MEMORY_ERROR = 0x40,
+	ERROR_UPDATE_DECRYPTION_FAIL = 0x41,
+	ERROR_UPDATE_FIRMWARE_VERSION_ERROR = 0x42,
+	ERROR_UPDATE_FLASH_WRITE_ERROR = 0x43,
+	ERROR_UPDATE_INVALID_TYPE = 0x44,
+	ERROR_UPDATE_FORMAT_ERROR = 0x45,
+	ERROR_UPDATE_FIRMWARE_SIZE_ERROR = 0x46,
+	ERROR_UPDATE_RESTORE_FAIL = 0x47,
+	ERROR_UPDATE_FIRMWARE_INVALID = 0x48,
+	ERROR_UPDATE_SPOOF_WRITE_FAIL = 0x49,
+	ERROR_UPDATE_SE_FAIL = 0x4A,
+	ERROR_UPDATE_OTP_INVALID = 0x4B,
+	ERROR_UPDATE_TX_KEY_FAIL = 0x4C,
+	ERROR_UPDATE_CALIBRATION_WRITE_FAIL = 0x4D,
+	ERROR_UPDATE_FS_RESTORE_FAIL = 0x4E,
+	ERROR_UPDATE_SYSTEM_INFO_WRITE_FAIL = 0x4F,
+	/* Generic Crypto Error */
+	ERROR_CRYPTO_ERROR = 0x50,
+	/* Update Firmware (V52X) */
+	ERROR_UPDATE_UNPACK_FAILURE = 0x60,
+	ERROR_UPDATE_THREAD_START = 0x61,
+	ERROR_UPDATE_EXEC_SCRIPT_FAIL = 0x62,
+	ERROR_UPDATE_EXEC_SCRIPT_TIMEOUT = 0x63,
+	ERROR_UPDATE_EXEC_NON_ZERO = 0x64,
+	ERROR_UPDATE_CFG_INVALID = 0x65,
+	ERROR_UPDATE_REMOVE_KEYS_FAILED = 0x66,
+	/* NOOP */
+	STATUS_NO_OP = 0xFF;
+
+public static final int
+        ACQ_DONE = 0,
+	ACQ_PROCESSING = 1,
+	ACQ_BUSY = 2,
+	ACQ_TIMEOUT = 3,
+	ACQ_NO_FINGER_PRESENT = 4,
+	ACQ_MOVE_FINGER_UP = 5,
+	ACQ_MOVE_FINGER_DOWN = 6,
+	ACQ_MOVE_FINGER_LEFT = 7,
+	ACQ_MOVE_FINGER_RIGHT = 8,
+	ACQ_FINGER_POSITION_OK = 9,
+	ACQ_CANCELLED_BY_USER = 10,
+	ACQ_LATENT_DETECTED = 11,
+	ACQ_FINGER_PRESENT = 12,
+	ACQ_SPOOF_DETECTED = 13,
+	ACQ_ERROR_MATCH = 14,
+	ACQ_ERROR_IMAGE = 15,
+	ACQ_ERROR_SYSTEM = 16,
+	ACQ_ERROR_PARAMETER = 17,
+	ACQ_NOOP = 99;
+    
+
+    // FIR
+    public static final int FIR_ISO_19794_4_HDR_SIZE = 46;	// FIR_ISO header size
+    public static final int FIR_ANSI_381_HDR_SIZE = 50;		// FIR_ANSI header size
+    public static final int LUMI_FIR_ISO = 0x0000;              // ISO/IEC 19794-4:2005
+    public static final int LUMI_FIR_ANSI = 0x0001;             // ANSI/INCITS 381-2004
+    public static final int LUMI_FIR_LAST = 0x00FF;
+
+// V100 Finger Palm Position
+public static final int
+        LUMI_FINGER_POSITION_UNKNOWN_FINGER = 0,
+	LUMI_FINGER_POSITION_RIGHT_THUMB = 1,
+	LUMI_FINGER_POSITION_RIGHT_INDEX_FINGER = 2,
+	LUMI_FINGER_POSITION_RIGHT_MIDDLE_FINGER = 3,
+	LUMI_FINGER_POSITION_RIGHT_RING_FINGER = 4,
+	LUMI_FINGER_POSITION_RIGHT_LITTLE_FINGER = 5,
+	LUMI_FINGER_POSITION_LEFT_THUMB = 6,
+	LUMI_FINGER_POSITION_LEFT_INDEX_FINGER = 7,
+	LUMI_FINGER_POSITION_LEFT_MIDDLE_FINGER = 8,
+	LUMI_FINGER_POSITION_LEFT_RING_FINGER = 9,
+	LUMI_FINGER_POSITION_LEFT_LITTLE_FINGER = 10,
+	LUMI_FINGER_POSITION_PLAIN_RIGHT_FOUR_FINGERS = 13,
+	LUMI_FINGER_POSITION_PLAIN_LEFT_FOUR_FINGERS = 14,
+	LUMI_FINGER_POSITION_PLAIN_THUMBS = 15,
+	LUMI_PALM_POSITION_UNKNOWN_PALM = 20,
+	LUMI_PALM_POSITION_RIGHT_FULL_PALM = 21,
+	LUMI_PALM_POSITION_RIGHT_WRITERS_PALM = 22,
+	LUMI_PALM_POSITION_LEFT_FULL_PALM = 23,
+	LUMI_PALM_POSITION_LEFT_WRITERS_PALM = 24,
+	LUMI_PALM_POSITION_RIGHT_LOWER_PALM = 25,
+	LUMI_PALM_POSITION_RIGHT_UPPER_PALM = 26,
+	LUMI_PALM_POSITION_LEFT_LOWER_PALM = 27,
+	LUMI_PALM_POSITION_LEFT_UPPER_PALM = 28,
+	LUMI_PALM_POSITION_RIGHT_OTHER = 29,
+	LUMI_PALM_POSITION_LEFT_OTHER = 30,
+	LUMI_PALM_POSITION_RIGHT_INTERDIGITAL = 31,
+	LUMI_PALM_POSITION_RIGHT_THENAR = 32,
+	LUMI_PALM_POSITION_RIGHT_HYPOTHENAR = 33,
+	LUMI_PALM_POSITION_LEFT_INTERDIGITAL = 34,
+	LUMI_PALM_POSITION_LEFT_THENAR = 35,
+	LUMI_PALM_POSITION_LEFT_HYPOTHENAR = 36,
+	LUMI_FINGER_PALM_POSITION_LAST = 37;
+        
+//_V100_LED_CONTROL  -  user LEDs for V-Series
+public final static int 
+        USR_LED_ALL_OFF         = 0x0000,
+	USR_LED_GREEN_ON	= 0x0001,
+	USR_LED_GREEN_OFF	= 0x0002,
+	USR_LED_RED_ON		= 0x0004,
+	USR_LED_RED_OFF		= 0x0008;
+        
+
+public static String getAcqStatusString(int acqStatusCode){
+    switch(acqStatusCode){
+        case ACQ_DONE: return "ACQ_DONE";
+	case ACQ_PROCESSING: return "ACQ_PROCESSING";
+	case ACQ_BUSY: return "ACQ_BUSY";
+	case ACQ_TIMEOUT: return "ACQ_TIMEOUT";
+	case ACQ_NO_FINGER_PRESENT: return "ACQ_NO_FINGER_PRESENT";
+	case ACQ_MOVE_FINGER_UP: return "ACQ_MOVE_FINGER_UP";
+	case ACQ_MOVE_FINGER_DOWN: return "ACQ_MOVE_FINGER_DOWN";
+	case ACQ_MOVE_FINGER_LEFT: return "ACQ_MOVE_FINGER_LEFT";
+	case ACQ_MOVE_FINGER_RIGHT: return "ACQ_MOVE_FINGER_RIGHT";
+	case ACQ_FINGER_POSITION_OK: return "ACQ_FINGER_POSITION_OK";
+	case ACQ_CANCELLED_BY_USER: return "ACQ_CANCELLED_BY_USER";
+	case ACQ_LATENT_DETECTED: return "ACQ_LATENT_DETECTED";
+	case ACQ_FINGER_PRESENT: return "ACQ_FINGER_PRESENT";
+	case ACQ_SPOOF_DETECTED: return "ACQ_SPOOF_DETECTED";
+	case ACQ_ERROR_MATCH: return "ACQ_ERROR_MATCH";
+	case ACQ_ERROR_IMAGE: return "ACQ_ERROR_IMAGE";
+	case ACQ_ERROR_SYSTEM: return "ACQ_ERROR_SYSTEM";
+	case ACQ_ERROR_PARAMETER: return "ACQ_ERROR_PARAMETER";
+	case ACQ_NOOP: return "ACQ_NOOP";        
+        default: return "UNKNOWN_ACQ_STATUS";
+    }
+}
+
+
+public static String getGeneralErrorCodeString(int generalErrorCode){
+        switch(generalErrorCode)
+        {
+            case ERROR_LIBS_NOT_LOADED: return "ERROR_LIBS_NOT_LOADED";
+            case ERROR_LIBS_ALREADY_LOADED: return "ERROR_LIBS_ALREADY_LOADED";
+            case ERROR_INTERNAL: return "ERROR_INTERNAL";
+            case GEN_OK: return "GEN_OK";
+            case GEN_ENCRYPTION_FAIL: return "GEN_ENCRYPTION_FAIL";
+            case GEN_DECRYPTION_FAIL: return "GEN_DECRYPTION_FAIL";
+            case GET_PD_INIT_FAIL: return "GET_PD_INIT_FAIL";
+            case PD_HISTOGRAM_FAIL: return "PD_HISTOGRAM_FAIL";
+            case INVALID_ACQ_MODE: return "INVALID_ACQ_MODE";
+            case BURNIN_THREAD_FAIL: return "BURNIN_THREAD_FAIL";
+            case UPDATER_THREAD_FAIL: return "UPDATER_THREAD_FAIL";
+            case GEN_ERROR_CONNECTION_REFUSED: return "GEN_ERROR_CONNECTION_REFUSED";
+            case GEN_ERROR_START: return "GEN_ERROR_START";
+            case GEN_ERROR_PROCESSING: return "GEN_ERROR_PROCESSING";
+            case GEN_ERROR_VERIFY: return "GEN_ERROR_VERIFY";
+            case GEN_ERROR_MATCH: return "GEN_ERROR_MATCH";
+            case GEN_ERROR_INTERNAL: return "GEN_ERROR_INTERNAL";
+            case GEN_ERROR_INVALID_CMD: return "GEN_ERROR_INVALID_CMD";
+            case GEN_ERROR_PARAMETER: return "GEN_ERROR_PARAMETER";
+            case GEN_NOT_SUPPORTED: return "GEN_NOT_SUPPORTED";
+            case GEN_INVALID_ARGUEMENT: return "GEN_INVALID_ARGUEMENT";
+            case GEN_ERROR_TIMEOUT: return "GEN_ERROR_TIMEOUT";
+            case GEN_ERROR_LICENSE: return "GEN_ERROR_LICENSE";
+            case GEN_ERROR_COMM_TIMEOUT: return "GEN_ERROR_COMM_TIMEOUT";
+            case GEN_FS_ERR_CD: return "GEN_FS_ERR_CD";
+            case GEN_FS_ERR_DELETE: return "GEN_FS_ERR_DELETE";
+            case GEN_FS_ERR_FIND: return "GEN_FS_ERR_FIND";
+            case GEN_FS_ERR_WRITE: return "GEN_FS_ERR_WRITE";
+            case GEN_FS_ERR_READ: return "GEN_FS_ERR_READ";
+            case GEN_FS_ERR_FORMAT: return "GEN_FS_ERR_FORMAT";
+            case GEN_ERROR_MEMORY: return "GEN_ERROR_MEMORY";
+            case GEN_ERROR_RECORD_NOT_FOUND: return "GEN_ERROR_RECORD_NOT_FOUND";
+            case GEN_VER_INVALID_RECORD_FORMAT: return "GEN_VER_INVALID_RECORD_FORMAT";
+            case GEN_ERROR_DB_FULL: return "GEN_ERROR_DB_FULL";
+            case GEN_ERROR_INVALID_SIZE: return "GEN_ERROR_INVALID_SIZE";
+            case GEN_ERROR_TAG_NOT_FOUND: return "GEN_ERROR_TAG_NOT_FOUND";
+            case GEN_ERROR_APP_BUSY: return "GEN_ERROR_APP_BUSY";
+            case GEN_ERROR_DEVICE_UNCONFIGURED: return "GEN_ERROR_DEVICE_UNCONFIGURED";
+            case GEN_ERROR_TIMEOUT_LATENT: return "GEN_ERROR_TIMEOUT_LATENT";
+            case GEN_ERROR_DB_NOT_LOADED: return "GEN_ERROR_DB_NOT_LOADED";
+            case GEN_ERROR_DB_DOESNOT_EXIST: return "GEN_ERROR_DB_DOESNOT_EXIST";
+            case GEN_ERROR_ENROLLMENTS_DO_NOT_MATCH: return "GEN_ERROR_ENROLLMENTS_DO_NOT_MATCH";
+            case GEN_ERROR_USER_NOT_FOUND: return "GEN_ERROR_USER_NOT_FOUND";
+            case GEN_ERROR_DB_USER_FINGERS_FULL: return "GEN_ERROR_DB_USER_FINGERS_FULL";
+            case GEN_ERROR_DB_USERS_FULL: return "GEN_ERROR_DB_USERS_FULL";
+            case GEN_ERROR_USER_EXISTS: return "GEN_ERROR_USER_EXISTS";
+            case GEN_ERROR_DEVICE_NOT_FOUND: return "GEN_ERROR_DEVICE_NOT_FOUND";
+            case GEN_ERROR_DEVICE_NOT_READY: return "GEN_ERROR_DEVICE_NOT_READY";
+            case GEN_ERROR_PIPE_READ: return "GEN_ERROR_PIPE_READ";
+            case GEN_ERROR_PIPE_WRITE: return "GEN_ERROR_PIPE_WRITE";
+            case GEN_ERROR_SENGINE_SHUTTING_DOWN: return "GEN_ERROR_SENGINE_SHUTTING_DOWN";
+            case GEN_ERROR_SPOOF_DETECTED: return "GEN_ERROR_SPOOF_DETECTED";
+            case GEN_ERROR_DATA_UNAVAILABLE: return "GEN_ERROR_DATA_UNAVAILABLE";
+            case GEN_ERROR_CRYPTO_FAIL: return "GEN_ERROR_CRYPTO_FAIL";
+            case GEN_ERROR_CAPTURE_CANCELLED: return "GEN_ERROR_CAPTURE_CANCELLED";
+            case GEN_ERROR_ENROLLMENT_INCOMPLETE: return "GEN_ERROR_ENROLLMENT_INCOMPLETE";
+            case GEN_LAST: return "GEN_LAST";    
+            default: return "UNKNOWN_CODE";
+        }        
+    }
+
+    public static String getOPStatusCodeString(int opStatus){
+        switch(opStatus)
+        {
+            case STATUS_OK: return "STATUS_OK";
+            case ERROR_UID_EXISTS: return "ERROR_UID_EXISTS";
+            case ERROR_ENROLLMENT_QUALIFICATION: return "ERROR_ENROLLMENT_QUALIFICATION";
+            case ERROR_UID_DOES_NOT_EXIST: return "ERROR_UID_DOES_NOT_EXIST";
+            case ERROR_DB_FULL: return "ERROR_DB_FULL";
+            case ERROR_QUALIFICATION: return "ERROR_QUALIFICATION";
+            case ERROR_DEV_TIMEOUT: return "ERROR_DEV_TIMEOUT";
+            case ERROR_USER_CANCELLED: return "ERROR_USER_CANCELLED";
+            case ERROR_SPOOF_DETECTED: return "ERROR_SPOOF_DETECTED";
+            case ERROR_DB_EXISTS: return "ERROR_DB_EXISTS";
+            case ERROR_DB_DOES_NOT_EXIST: return "ERROR_DB_DOES_NOT_EXIST";
+            case ERROR_ID_DB_TOO_LARGE: return "ERROR_ID_DB_TOO_LARGE";
+            case ERROR_ID_DB_EXISTS: return "ERROR_ID_DB_EXISTS";
+            case ERROR_ID_USER_EXISTS: return "ERROR_ID_USER_EXISTS";
+            case ERROR_ID_USER_NOT_FOUND: return "ERROR_ID_USER_NOT_FOUND";
+            case STATUS_ID_MATCH: return "STATUS_ID_MATCH";
+            case STATUS_ID_NO_MATCH: return "STATUS_ID_NO_MATCH";
+            case ERROR_ID_PARAMETER: return "ERROR_ID_PARAMETER";
+            case ERROR_ID_GENERAL: return "ERROR_ID_GENERAL";
+            case ERROR_ID_FILE: return "ERROR_ID_FILE";
+            case ERROR_ID_NOT_INITIALIZED: return "ERROR_ID_NOT_INITIALIZED";
+            case ERROR_ID_DB_FULL: return "ERROR_ID_DB_FULL";
+            case ERROR_ID_DB_DOESNT_EXIST: return "ERROR_ID_DB_DOESNT_EXIST";
+            case ERROR_ID_DB_NOT_LOADED: return "ERROR_ID_DB_NOT_LOADED";
+            case ERROR_ID_RECORD_NOT_FOUND: return "ERROR_ID_RECORD_NOT_FOUND";
+            case ERROR_ID_FS: return "ERROR_ID_FS";
+            case ERROR_ID_CREATE_FAIL: return "ERROR_ID_CREATE_FAIL";
+            case ERROR_ID_INTERNAL: return "ERROR_ID_INTERNAL";
+            case ERROR_ID_MEM: return "ERROR_ID_MEM";
+            case STATUS_ID_USER_FOUND: return "STATUS_ID_USER_FOUND";
+            case STATUS_ID_USER_NOT_FOUND: return "STATUS_ID_USER_NOT_FOUND";
+            case ERROR_ID_USER_FINGERS_FULL: return "ERROR_ID_USER_FINGERS_FULL";
+            case ERROR_ID_USER_MULTI_FINGERS_NOT_FOUND: return "ERROR_ID_USER_MULTI_FINGERS_NOT_FOUND";
+            case ERROR_ID_USERS_FULL: return "ERROR_ID_USERS_FULL";
+            case ERROR_ID_OPERATION_NOT_SUPPORTED: return "ERROR_ID_OPERATION_NOT_SUPPORTED";
+            case ERROR_ID_NOT_ENOUGH_SPACE: return "ERROR_ID_NOT_ENOUGH_SPACE";
+            case ERROR_ID_DUPLICATE: return "ERROR_ID_DUPLICATE";
+            case ERROR_CAPTURE_TIMEOUT: return "ERROR_CAPTURE_TIMEOUT";
+            case ERROR_CAPTURE_LATENT: return "ERROR_CAPTURE_LATENT";
+            case ERROR_CAPTURE_CANCELLED: return "ERROR_CAPTURE_CANCELLED";
+            case ERROR_CAPTURE_INTERNAL: return "ERROR_CAPTURE_INTERNAL";
+            case ERROR_UPDATE_MEMORY_ERROR: return "ERROR_UPDATE_MEMORY_ERROR";
+            case ERROR_UPDATE_DECRYPTION_FAIL: return "ERROR_UPDATE_DECRYPTION_FAIL";
+            case ERROR_UPDATE_FIRMWARE_VERSION_ERROR: return "ERROR_UPDATE_FIRMWARE_VERSION_ERROR";
+            case ERROR_UPDATE_FLASH_WRITE_ERROR: return "ERROR_UPDATE_FLASH_WRITE_ERROR";
+            case ERROR_UPDATE_INVALID_TYPE: return "ERROR_UPDATE_INVALID_TYPE";
+            case ERROR_UPDATE_FORMAT_ERROR: return "ERROR_UPDATE_FORMAT_ERROR";
+            case ERROR_UPDATE_FIRMWARE_SIZE_ERROR: return "ERROR_UPDATE_FIRMWARE_SIZE_ERROR";
+            case ERROR_UPDATE_RESTORE_FAIL: return "ERROR_UPDATE_RESTORE_FAIL";
+            case ERROR_UPDATE_FIRMWARE_INVALID: return "ERROR_UPDATE_FIRMWARE_INVALID";
+            case ERROR_UPDATE_SPOOF_WRITE_FAIL: return "ERROR_UPDATE_SPOOF_WRITE_FAIL";
+            case ERROR_UPDATE_SE_FAIL: return "ERROR_UPDATE_SE_FAIL";
+            case ERROR_UPDATE_OTP_INVALID: return "ERROR_UPDATE_OTP_INVALID";
+            case ERROR_UPDATE_TX_KEY_FAIL: return "ERROR_UPDATE_TX_KEY_FAIL";
+            case ERROR_UPDATE_CALIBRATION_WRITE_FAIL: return "ERROR_UPDATE_CALIBRATION_WRITE_FAIL";
+            case ERROR_UPDATE_FS_RESTORE_FAIL: return "ERROR_UPDATE_FS_RESTORE_FAIL";
+            case ERROR_UPDATE_SYSTEM_INFO_WRITE_FAIL: return "ERROR_UPDATE_SYSTEM_INFO_WRITE_FAIL";
+            case ERROR_CRYPTO_ERROR: return "ERROR_CRYPTO_ERROR";
+            case ERROR_UPDATE_UNPACK_FAILURE: return "ERROR_UPDATE_UNPACK_FAILURE";
+            case ERROR_UPDATE_THREAD_START: return "ERROR_UPDATE_THREAD_START";
+            case ERROR_UPDATE_EXEC_SCRIPT_FAIL: return "ERROR_UPDATE_EXEC_SCRIPT_FAIL";
+            case ERROR_UPDATE_EXEC_SCRIPT_TIMEOUT: return "ERROR_UPDATE_EXEC_SCRIPT_TIMEOUT";
+            case ERROR_UPDATE_EXEC_NON_ZERO: return "ERROR_UPDATE_EXEC_NON_ZERO";
+            case ERROR_UPDATE_CFG_INVALID: return "ERROR_UPDATE_CFG_INVALID";
+            case ERROR_UPDATE_REMOVE_KEYS_FAILED: return "ERROR_UPDATE_REMOVE_KEYS_FAILED";
+            case STATUS_NO_OP: return "STATUS_NO_OP";
+            default: return "UNKOWN_STATUS";
+        }
+    }
+}
+
+
